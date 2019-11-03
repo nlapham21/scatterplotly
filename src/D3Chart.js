@@ -15,13 +15,32 @@ export default class D3Chart {
                 .attr("width", WIDTH + MARGIN.LEFT + MARGIN.RIGHT)
                 .attr("height", HEIGHT + MARGIN.TOP + MARGIN.BOTTOM)
             .append("g")
-                .attr("transform",  `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`)
+                .attr("transform", `translate(${MARGIN.LEFT}, ${MARGIN.TOP})`)
 
         vis.x = d3.scaleLinear()
             .range([0, WIDTH])
 
         vis.y = d3.scaleLinear()
             .range([HEIGHT, 0])
+
+        vis.xAxisGroup = vis.g.append("g")
+            .attr("transform", `translate(0, ${HEIGHT})`)
+        vis.yAxisGroup = vis.g.append("g")
+
+        vis.g.append("text")
+            .attr("x", WIDTH / 2)
+            .attr("y", HEIGHT + 40)
+            .attr("font-size", 20)
+            .attr("text-anchor", "middle")
+            .text("age")
+
+        vis.g.append("text")
+            .attr("x", -(HEIGHT / 2))
+            .attr("y", -50)
+            .attr("transform", "rotate(-90)")
+            .attr("font-size", 20)
+            .attr("text-anchor", "middle")
+            .text("height in cm")
                 
         vis.update();
 
@@ -32,6 +51,12 @@ export default class D3Chart {
         
         vis.x.domain([0,d3.max(vis.data, d => Number(d.age))])
         vis.y.domain([0, d3.max(vis.data, d => Number(d.height))])
+
+        const xAxisCall = d3.axisBottom(vis.x)
+        const yAxisCall = d3.axisLeft(vis.y)
+
+        vis.xAxisGroup.call(xAxisCall)
+        vis.yAxisGroup.call(yAxisCall)
 
         // JOIN
         const circles = vis.g.selectAll("circle")
