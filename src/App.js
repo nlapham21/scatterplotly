@@ -7,8 +7,11 @@ import Table from './Table';
 
 class App extends Component {
     state = {
-        data: []
+        data: [],
+        activeName: null
     }
+
+    updateName = (activeName) => this.setState({ activeName })
 
     updateData = (data) => this.setState({ data })
 
@@ -22,7 +25,7 @@ class App extends Component {
         if (this.state.data.length === 0) {
             return "No data yet"
         }
-        return <ChartWrapper data={this.state.data}/>
+        return <ChartWrapper data={this.state.data} updateName={this.updateName}/>
     }
 
     render() {
@@ -34,7 +37,7 @@ class App extends Component {
                 <Container>
                     <Row>
                         <Col md={6} xs={12}>{this.renderChart()}</Col>
-                        <Col md={6} xs={12}><Table data={this.state.data} updateData={this.updateData}/></Col>
+                        <Col md={6} xs={12}><Table data={this.state.data} updateData={this.updateData} activeName={this.state.activeName}/></Col>
                     </Row>
                 </Container>
             </div>
