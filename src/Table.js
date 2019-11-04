@@ -9,6 +9,7 @@ export default class Table extends Component {
     }
 
     handleSubmit = () => {
+        // TODO: Add data validation
         this.props.updateData([this.state, ...this.props.data])
         this.setState({
             name: "",

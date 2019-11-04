@@ -60,7 +60,7 @@ export default class D3Chart {
 
         // JOIN
         const circles = vis.g.selectAll("circle")
-            .data(vis.data, d => d.name)
+            .data(vis.data, d => d.name) // TODO: Use something other than name to specify user (id)
 
         // EXIT
         circles.exit()
